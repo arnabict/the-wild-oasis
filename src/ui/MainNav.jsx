@@ -72,19 +72,19 @@ function MainNav() {
         <li>
           <StyledNavLink to="/cabins">
             <HiHomeModern />
-            <span>Bookings</span>
+            <span>Cabins</span>
           </StyledNavLink>
         </li>
         <li>
           <StyledNavLink to="/users">
             <HiUsers />
-            <span>Bookings</span>
+            <span>Users</span>
           </StyledNavLink>
         </li>
         <li>
           <StyledNavLink to="/settings">
             <HiCog6Tooth />
-            <span>Bookings</span>
+            <span>Settings</span>
           </StyledNavLink>
         </li>
       </NavList>
