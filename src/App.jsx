@@ -22,10 +22,11 @@ const queryClient = new QueryClient({
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <ReactQueryDevtools initialIsOpen={false} />
-      <GlobalStyles />
-      <BrowserRouter>
+    <>
+      <GlobalStyles key="global-styles" />
+      <QueryClientProvider client={queryClient}>
+        <ReactQueryDevtools initialIsOpen={false} />
+        <BrowserRouter>
         <Routes>
           <Route element={<AppLayout />}>
             <Route index element={<Navigate replace to="dashboard" />} />
@@ -42,6 +43,7 @@ function App() {
         </Routes>
       </BrowserRouter>
     </QueryClientProvider>
+    </>
   );
 }
 

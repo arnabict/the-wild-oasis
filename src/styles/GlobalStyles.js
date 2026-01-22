@@ -51,6 +51,9 @@ const GlobalStyles = createGlobalStyle`
   --border-radius-md: 7px;
   --border-radius-lg: 9px;
 
+  /* Font */
+  --font-family-primary: "Poppins", sans-serif;
+
   /* For dark mode */
   --image-grayscale: 0;
   --image-opacity: 100%;
@@ -62,6 +65,7 @@ const GlobalStyles = createGlobalStyle`
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+  font-family: var(--font-family-primary) !important;
 
   /* Creating animations for dark mode */
   transition: background-color 0.3s, border 0.3s;
@@ -69,16 +73,21 @@ const GlobalStyles = createGlobalStyle`
 
 html {
   font-size: 62.5%;
+  font-family: var(--font-family-primary) !important;
 }
 
 body {
-  font-family: "Poppins", sans-serif;
+  font-family: var(--font-family-primary) !important;
   color: var(--color-grey-700);
 
   transition: color 0.3s, background-color 0.3s;
   min-height: 100vh;
   line-height: 1.5;
   font-size: 1.6rem;
+}
+
+#root {
+  font-family: var(--font-family-primary) !important;
 }
 
 input,
