@@ -65,7 +65,7 @@ function CreateCabinForm() {
           {...register("regularPrice", {
             required: "This field is required",
             valueAsNumber: true,
-            min: { value: 1, message: "Price should be atleast 20" },
+            min: { value: 20, message: "Price should be atleast 20" },
           })}
         />
       </FormRow>
