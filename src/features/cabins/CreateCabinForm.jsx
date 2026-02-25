@@ -27,7 +27,7 @@ function CreateCabinForm({ cabinToEdit = {} }) {
   const { mutate: createCabin, isPending: isCreating } = useMutation({
     mutationFn: createEditCabin,
     onSuccess: () => {
-      toast.success("New cabin succesfully created");
+      toast.success("New cabin successfully created");
       queryClient.invalidateQueries({ queryKey: ["cabins"] });
       reset();
     },
@@ -38,7 +38,7 @@ function CreateCabinForm({ cabinToEdit = {} }) {
   const { mutate: editCabin, isPending: isEditing } = useMutation({
     mutationFn: ({ newCabinData, id }) => createEditCabin(newCabinData, id),
     onSuccess: () => {
-      toast.success("New cabin succesfully edited");
+      toast.success("New cabin successfully edited");
       queryClient.invalidateQueries({ queryKey: ["cabins"] });
       reset();
     },
@@ -92,7 +92,7 @@ function CreateCabinForm({ cabinToEdit = {} }) {
           {...register("regularPrice", {
             required: "This field is required",
             valueAsNumber: true,
-            min: { value: 1, message: "Price should be atleast 20" },
+            min: { value: 20, message: "Price should be atleast 20" },
           })}
         />
       </FormRow>
