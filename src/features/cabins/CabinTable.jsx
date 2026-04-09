@@ -4,14 +4,17 @@ import { useCabins } from "./useCabins";
 import Table from "../../ui/Table";
 import Menus from "../../ui/Menus";
 import { useSearchParams } from "react-router";
+import Empty from "../../ui/Empty";
 
 function CabinTable() {
   const { cabins, isLoading } = useCabins();
   const [searchParams] = useSearchParams();
 
-  // FILTER
   if (isLoading) return <Spinner />;
 
+  if (!cabins.length) return <Empty resourceName="cabins" />;
+
+  // FILTER
   const filterValue = searchParams.get("discount") || "all";
 
   let filteredCabins = cabins;
