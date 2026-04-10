@@ -6,11 +6,20 @@ import { useBookings } from "./useBookings";
 import Spinner from "../../ui/Spinner";
 
 function BookingTable() {
-  const { bookings, isLoading } = useBookings();
+  const { bookings, isLoading, isError, error } = useBookings();
 
   if (isLoading) return <Spinner />;
 
-  if (!bookings.length) return <Empty resourceName="bookings" />;
+  if (isError)
+    return (
+      <p role="alert">
+        {error?.message ||
+          "Could not load bookings. In Supabase: allow SELECT for the anon role on `bookings` (and related tables), and ensure foreign keys to `guests` and `cabins` exist."}
+      </p>
+    );
+
+  const list = bookings ?? [];
+  if (!list.length) return <Empty resourceName="bookings" />;
 
   return (
     <Menus>
@@ -25,7 +34,7 @@ function BookingTable() {
         </Table.Header>
 
         <Table.Body
-          data={bookings}
+          data={list}
           render={(booking) => (
             <BookingRow key={booking.id} booking={booking} />
           )}

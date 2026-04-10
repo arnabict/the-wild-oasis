@@ -6,10 +6,12 @@ export async function getBookings() {
 
   if (error) {
     console.error(error);
-    throw new Error("Bookings not found");
+    throw new Error(
+      error.message || "Bookings could not be loaded. Check Supabase RLS and foreign keys (guests, cabins).",
+    );
   }
 
-  return data;
+  return data ?? [];
 }
 
 export async function getBooking(id) {
