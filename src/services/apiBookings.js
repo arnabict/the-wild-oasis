@@ -1,13 +1,23 @@
 import { getToday } from "../utils/helpers";
 import supabase from "./supabase";
 
-export async function getBookings() {
-  const { data, error } = await supabase.from("bookings").select("id, created_at, startDate, endDate, numNights, numGuests, status, totalPrice, cabins(name), guests(fullName, email)");
+export async function getBookings({ filter, sortBy }) {
+  let query = supabase
+    .from("bookings")
+    .select(
+      "id, created_at, startDate, endDate, numNights, numGuests, status, totalPrice, cabins(name), guests(fullName, email)",
+    );
+
+  // FILTER
+  if (filter !== null) query = query.eq(filter.field, filter.value);
+
+  const { data, error } = await query;
 
   if (error) {
     console.error(error);
     throw new Error(
-      error.message || "Bookings could not be loaded. Check Supabase RLS and foreign keys (guests, cabins).",
+      error.message ||
+        "Bookings could not be loaded. Check Supabase RLS and foreign keys (guests, cabins).",
     );
   }
 
@@ -68,7 +78,7 @@ export async function getStaysTodayActivity() {
     .from("bookings")
     .select("*, guests(fullName, nationality, countryFlag)")
     .or(
-      `and(status.eq.unconfirmed,startDate.eq.${getToday()}),and(status.eq.checked-in,endDate.eq.${getToday()})`
+      `and(status.eq.unconfirmed,startDate.eq.${getToday()}),and(status.eq.checked-in,endDate.eq.${getToday()})`,
     )
     .order("created_at");
 
