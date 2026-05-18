@@ -101,6 +101,31 @@ const Footer = styled.footer`
   text-align: right;
 `;
 
+function isValidPrice(value) {
+  return value != null && value !== "" && !Number.isNaN(Number(value));
+}
+
+function getBreakfastPrice({ hasBreakfast, extrasPrice, extraPrice, numNights, numGuests }) {
+  if (!hasBreakfast) return null;
+
+  const stored = extrasPrice ?? extraPrice;
+  if (isValidPrice(stored)) return Number(stored);
+
+  if (numNights && numGuests) return numNights * 15 * numGuests;
+
+  return null;
+}
+
+function getCabinPrice({ cabinPrice, numNights, cabins }) {
+  if (isValidPrice(cabinPrice)) return Number(cabinPrice);
+
+  const { regularPrice, discount = 0 } = cabins ?? {};
+  if (numNights && regularPrice != null)
+    return numNights * (regularPrice - discount);
+
+  return null;
+}
+
 // A purely presentational component
 function BookingDataBox({ booking }) {
   const {
@@ -109,15 +134,35 @@ function BookingDataBox({ booking }) {
     endDate,
     numNights,
     numGuests,
-    cabinPrice,
-    extrasPrice,
     totalPrice,
     hasBreakfast,
     observations,
     isPaid,
-    guests: { fullName: guestName, email, country, countryFlag, nationalID },
-    cabins: { name: cabinName },
+    guests,
+    cabins,
   } = booking;
+
+  const {
+    fullName: guestName,
+    email,
+    country,
+    countryFlag,
+    nationalID,
+  } = guests ?? {};
+  const { name: cabinName } = cabins ?? {};
+
+  const breakfastPrice = getBreakfastPrice(booking);
+  const displayCabinPrice = getCabinPrice(booking);
+
+  const breakdownParts = [];
+  if (isValidPrice(displayCabinPrice))
+    breakdownParts.push(`${formatCurrency(displayCabinPrice)} cabin`);
+  if (isValidPrice(breakfastPrice))
+    breakdownParts.push(`${formatCurrency(breakfastPrice)} breakfast`);
+
+  const priceBreakdown = breakdownParts.length
+    ? ` (${breakdownParts.join(" + ")})`
+    : "";
 
   return (
     <StyledBookingDataBox>
@@ -166,11 +211,7 @@ function BookingDataBox({ booking }) {
         <Price isPaid={isPaid}>
           <DataItem icon={<HiOutlineCurrencyDollar />} label={`Total price`}>
             {formatCurrency(totalPrice)}
-
-            {hasBreakfast &&
-              ` (${formatCurrency(cabinPrice)} cabin + ${formatCurrency(
-                extrasPrice
-              )} breakfast)`}
+            {priceBreakdown}
           </DataItem>
 
           <p>{isPaid ? "Paid" : "Will pay at property"}</p>

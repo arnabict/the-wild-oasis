@@ -6,10 +6,9 @@ import Tag from "../../ui/Tag";
 import ButtonGroup from "../../ui/ButtonGroup";
 import Button from "../../ui/Button";
 import ButtonText from "../../ui/ButtonText";
-
+import Spinner from "../../ui/Spinner";
 import { useMoveBack } from "../../hooks/useMoveBack";
 import { useBooking } from "./useBooking";
-import Spinner from "../../ui/Spinner";
 
 const HeadingGroup = styled.div`
   display: flex;
@@ -18,13 +17,20 @@ const HeadingGroup = styled.div`
 `;
 
 function BookingDetail() {
-  const { booking, isLoading } = useBooking();
-
+  const { booking, isLoading, error } = useBooking();
   const moveBack = useMoveBack();
 
-  const { status, id: bookingId } = booking;
-
   if (isLoading) return <Spinner />;
+
+  if (error || !booking)
+    return (
+      <>
+        <p role="alert">{error?.message || "Booking not found"}</p>
+        <ButtonText onClick={moveBack}>&larr; Back</ButtonText>
+      </>
+    );
+
+  const { status, id: bookingId } = booking;
 
   const statusToTagName = {
     unconfirmed: "blue",

@@ -35,10 +35,14 @@ const Stacked = styled.div`
 const Amount = styled.div`
   font-family: "Sono";
   font-weight: 500;
+  text-align: right;
+  justify-self: end;
+  min-width: 0;
 `;
 
 function BookingRow({
   booking: {
+    id: bookingId,
     startDate,
     endDate,
     numNights,
@@ -46,7 +50,6 @@ function BookingRow({
     status,
     guests,
     cabins,
-    bookingId,
   },
 }) {
   const navigate = useNavigate();
@@ -88,16 +91,20 @@ function BookingRow({
 
       <Amount>{formatCurrency(totalPrice)}</Amount>
 
-      <Menus.Menu>
-        <Menus.Toggle id={bookingId} />
-        <Menus.List id={bookingId} />
-        <Menus.Button
-          icon={<HiEye />}
-          onClick={navigate(`/bookings/${bookingId}`)}
-        >
-          See details
-        </Menus.Button>
-      </Menus.Menu>
+      <div>
+        <Menus.Menu>
+          <Menus.Toggle id={bookingId} />
+
+          <Menus.List id={bookingId}>
+            <Menus.Button
+              icon={<HiEye />}
+              onClick={() => navigate(`/bookings/${bookingId}`)}
+            >
+              See details
+            </Menus.Button>
+          </Menus.List>
+        </Menus.Menu>
+      </div>
     </Table.Row>
   );
 }
