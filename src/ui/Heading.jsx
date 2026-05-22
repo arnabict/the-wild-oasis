@@ -4,7 +4,7 @@ import styled, { css } from "styled-components";
 //   text-align: center;
 // `;
 
-const H1 = styled.h1`
+const Heading = styled.h1`
   ${(props) =>
     props.as === "h1" &&
     css`
@@ -26,7 +26,15 @@ const H1 = styled.h1`
       font-weight: 500;
     `}
 
+     ${(props) =>
+    props.as === "h4" &&
+    css`
+      font-size: 2rem;
+      font-weight: 600;
+      text-align: center;
+    `}
+
   line-height:1.4;
 `;
 
-export default H1;
+export default Heading;
