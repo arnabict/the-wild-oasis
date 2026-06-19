@@ -12,7 +12,7 @@ import {
   HiTrash,
 } from "react-icons/hi2";
 import { useNavigate } from "react-router-dom";
-import { useChckout } from "../check-in-out/useCheckout";
+import { useCheckout } from "../check-in-out/useCheckout";
 import Modal from "../../ui/Modal";
 import ConfirmDelete from "../../ui/ConfirmDelete";
 import { useDeleteBooking } from "./useDeleteBooking";
@@ -60,7 +60,7 @@ function BookingRow({
   },
 }) {
   const navigate = useNavigate();
-  const { checkout, isCheckout } = useChckout();
+  const { checkout, isCheckout } = useCheckout();
   const { isDeleting, deleteBooking } = useDeleteBooking();
 
   const guestName = guests?.fullName ?? "—";
