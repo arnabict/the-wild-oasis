@@ -9,7 +9,7 @@ A modern admin dashboard for **The Wild Oasis**, a boutique hotel and cabin retr
 
 ## Live Demo
 
-- thewildoasis1234.netlify.app
+[Click here](https://thewildoasis1234.netlify.app)
 
 ## Features
 
